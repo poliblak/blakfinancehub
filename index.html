@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BlakFinanceHub</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <div id="authView" class="auth-shell hidden">
+      <section class="auth-panel">
+        <div class="brand-row">
+          <div class="brand-mark">BF</div>
+          <div>
+            <p class="eyebrow">Personal finance realtime</p>
+            <h1>BlakFinanceHub</h1>
+          </div>
+        </div>
+        <p class="auth-copy">Ingresa con tu correo para mantener tus movimientos privados y sincronizados en todos tus dispositivos.</p>
+        <form id="authForm" class="auth-form">
+          <label>
+            Email
+            <input id="authEmail" type="email" autocomplete="email" required placeholder="tu@email.com" />
+          </label>
+          <label>
+            Password
+            <input id="authPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Minimo 6 caracteres" />
+          </label>
+          <div class="auth-actions">
+            <button class="primary" type="submit" data-auth-mode="signin">Entrar</button>
+            <button class="ghost" type="button" id="signupBtn">Crear cuenta</button>
+          </div>
+          <p id="authStatus" class="status"></p>
+        </form>
+      </section>
+    </div>
+
+    <div id="appView" class="app-shell hidden">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark small">BF</div>
+          <span>Blak<span>Finance</span></span>
+        </div>
+        <nav class="nav">
+          <a href="#dashboard" class="active"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+          <a href="#insights"><i data-lucide="sparkles"></i>Insights</a>
+          <a href="#transactions"><i data-lucide="receipt-text"></i>Transacciones</a>
+          <a href="#categories"><i data-lucide="tags"></i>Categorias</a>
+        </nav>
+        <div class="side-meta">
+          <span id="realtimeState" class="pill">Realtime</span>
+          <button id="signOutBtn" class="icon-text"><i data-lucide="log-out"></i>Salir</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Control financiero personal</p>
+            <h2>Dashboard</h2>
+          </div>
+          <div class="top-actions">
+            <div class="search">
+              <i data-lucide="search"></i>
+              <input id="searchInput" type="search" placeholder="Buscar" />
+            </div>
+            <button class="icon-only" id="refreshBtn" title="Actualizar"><i data-lucide="refresh-cw"></i></button>
+          </div>
+        </header>
+
+        <section class="ticker-grid" aria-label="Resumen">
+          <article class="ticker">
+            <span>Ingresos mes</span>
+            <strong id="incomeMetric">$0</strong>
+            <small class="good" id="incomeDelta">+0%</small>
+          </article>
+          <article class="ticker">
+            <span>Gastos mes</span>
+            <strong id="expenseMetric">$0</strong>
+            <small class="bad" id="expenseDelta">0%</small>
+          </article>
+          <article class="ticker">
+            <span>Ahorros mes</span>
+            <strong id="savingMetric">$0</strong>
+            <small class="good" id="savingRate">0% rate</small>
+          </article>
+          <article class="ticker">
+            <span>Balance</span>
+            <strong id="balanceMetric">$0</strong>
+            <small id="balanceHint">Disponible</small>
+          </article>
+        </section>
+
+        <section id="dashboard" class="dashboard-grid">
+          <article class="panel chart-panel">
+            <div class="panel-head">
+              <div>
+                <h3>Flujo mensual</h3>
+                <p>Ingresos, gastos y ahorros por dia</p>
+              </div>
+              <div class="tabs">
+                <button class="active" data-period="month">Mes</button>
+                <button data-period="quarter">Trim</button>
+                <button data-period="year">Ano</button>
+              </div>
+            </div>
+            <canvas id="flowChart"></canvas>
+          </article>
+
+          <article class="panel score-panel">
+            <div class="panel-head">
+              <div>
+                <h3>Strength meter</h3>
+                <p>Salud financiera estimada</p>
+              </div>
+              <i data-lucide="info"></i>
+            </div>
+            <div class="gauge" id="scoreGauge">
+              <span id="scoreValue">0</span>
+              <small>Score</small>
+            </div>
+            <div class="score-stats">
+              <span><strong id="expenseRatio">0%</strong> gasto</span>
+              <span><strong id="casinoRatio">0%</strong> casino</span>
+              <span><strong id="savingScore">0%</strong> ahorro</span>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Distribucion</h3>
+                <p>Gastos por categoria</p>
+              </div>
+            </div>
+            <canvas id="categoryChart"></canvas>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Today's value</h3>
+                <p>Totales por tipo</p>
+              </div>
+            </div>
+            <canvas id="typeChart"></canvas>
+          </article>
+        </section>
+
+        <section class="action-strip">
+          <button class="primary" data-open-transaction="income"><i data-lucide="plus-circle"></i>Registrar ingreso</button>
+          <button class="danger" data-open-transaction="expense"><i data-lucide="minus-circle"></i>Registrar gasto</button>
+          <button class="success" data-open-transaction="saving"><i data-lucide="piggy-bank"></i>Registrar ahorro</button>
+          <button class="ghost" id="openCategoryBtn"><i data-lucide="tag"></i>Nueva categoria</button>
+        </section>
+
+        <section id="insights" class="insight-grid">
+          <article class="panel wide">
+            <div class="panel-head">
+              <div>
+                <h3>Insights</h3>
+                <p>Lecturas automaticas del mes actual</p>
+              </div>
+            </div>
+            <div id="insightsList" class="insights-list"></div>
+          </article>
+        </section>
+
+        <section id="transactions" class="panel table-panel">
+          <div class="panel-head wrap">
+            <div>
+              <h3>Listado de transacciones</h3>
+              <p>Filtra por tipo, categoria, fechas y texto</p>
+            </div>
+            <div class="filters">
+              <select id="typeFilter">
+                <option value="all">Todos</option>
+                <option value="income">Ingresos</option>
+                <option value="expense">Gastos</option>
+                <option value="saving">Ahorros</option>
+              </select>
+              <select id="categoryFilter">
+                <option value="all">Categoria</option>
+              </select>
+              <input id="fromFilter" type="date" />
+              <input id="toFilter" type="date" />
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Detalle</th>
+                  <th>Tipo</th>
+                  <th>Categoria</th>
+                  <th>Metodo</th>
+                  <th class="right">Monto</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="transactionsTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="categories" class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Categorias</h3>
+              <p>Base comun y categorias propias sincronizadas</p>
+            </div>
+          </div>
+          <div id="categoryCloud" class="category-cloud"></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="transactionDialog" class="modal">
+      <form id="transactionForm" method="dialog">
+        <div class="modal-head">
+          <h3 id="transactionTitle">Registrar</h3>
+          <button type="button" class="icon-only" data-close-modal><i data-lucide="x"></i></button>
+        </div>
+        <input id="transactionType" type="hidden" />
+        <label>Nombre<input id="txTitle" required maxlength="80" placeholder="Ej: Supermercado" /></label>
+        <label>Monto<input id="txAmount" required type="number" min="1" step="0.01" placeholder="0.00" /></label>
+        <label>Categoria<select id="txCategory" required></select></label>
+        <label>Fecha<input id="txDate" type="date" required /></label>
+        <label>Metodo<select id="txMethod"><option>debito</option><option>credito</option><option>efectivo</option><option>transferencia</option><option>crypto</option><option>otro</option></select></label>
+        <label>Nota<textarea id="txNote" rows="3" placeholder="Opcional"></textarea></label>
+        <div class="modal-actions">
+          <button class="ghost" type="button" data-close-modal>Cancelar</button>
+          <button class="primary" type="submit">Guardar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="categoryDialog" class="modal">
+      <form id="categoryForm" method="dialog">
+        <div class="modal-head">
+          <h3>Nueva categoria</h3>
+          <button type="button" class="icon-only" data-close-modal><i data-lucide="x"></i></button>
+        </div>
+        <label>Tipo<select id="catType"><option value="expense">Gasto</option><option value="income">Ingreso</option><option value="saving">Ahorro</option></select></label>
+        <label>Nombre<input id="catName" required maxlength="40" placeholder="Ej: Mascotas" /></label>
+        <label>Color<input id="catColor" type="color" value="#9af5ef" /></label>
+        <div class="modal-actions">
+          <button class="ghost" type="button" data-close-modal>Cancelar</button>
+          <button class="primary" type="submit">Crear</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast hidden"></div>
+  </body>
+</html>
