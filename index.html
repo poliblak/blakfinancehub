@@ -110,6 +110,319 @@ td:first-child{border-radius:18px 0 0 18px}td:last-child{border-radius:0 18px 18
 .tooltip{position:fixed;z-index:50;pointer-events:none;background:var(--gray-100);color:var(--black);border-radius:12px;padding:8px 10px;font-size:12px;font-weight:800;display:none}
 @media(max-width:1100px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-2,.split,.budget-layout{grid-template-columns:1fr}.goal-grid,.budget-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.app{grid-template-columns:1fr}.side{position:sticky;top:0;z-index:10;padding:14px;gap:12px}.nav{grid-template-columns:repeat(5,1fr);overflow:auto}.nav button{justify-content:center;padding:0 12px;font-size:0}.nav button span:first-child{font-size:18px}.side-bottom{display:none}.main{padding:18px 14px}.top{align-items:flex-start}.top-actions{display:none}.grid-4{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.metric{min-height:132px;padding:16px}.metric .value{font-size:22px}.goal-grid,.budget-grid{grid-template-columns:1fr}.auth-card{grid-template-columns:1fr}.auth-copy{display:none}.form-row{grid-template-columns:1fr}.bar-chart{gap:8px}.bar{width:12px}}
+
+/* DAO1 crypto-dashboard aesthetic override */
+:root{
+  --gray-900:#0B0B0D;
+  --gray-800:#151517;
+  --gray-700:#202124;
+  --gray-600:#2B2C30;
+  --gray-500:#4A4B52;
+  --gray-400:#747780;
+  --gray-300:#A9ABB4;
+  --gray-200:#D6D8DF;
+  --gray-100:#F1F3F7;
+  --black:#050506;
+  --white:#FFFFFF;
+  --lime:#D7FF3F;
+  --lime-2:#A9D91F;
+  --violet-glow:#6d5dfc;
+  --orange:#F9970C;
+  --orange-200:#FEF4E1;
+  --green:#8EEA4E;
+  --green-200:rgba(142,234,78,.16);
+  --red:#FF4E4E;
+  --red-200:rgba(255,78,78,.14);
+  --radius:18px;
+  --radius-sm:14px;
+  --shadow:0 22px 70px rgba(0,0,0,.45);
+}
+html,body{
+  background:#08080A;
+  color:var(--gray-100);
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 8% 12%,rgba(215,255,63,.08),transparent 24%),
+    radial-gradient(circle at 72% 4%,rgba(109,93,252,.10),transparent 22%),
+    linear-gradient(120deg,rgba(255,255,255,.025),transparent 30%,rgba(255,255,255,.018));
+  z-index:0;
+}
+.app{
+  position:relative;
+  z-index:1;
+  grid-template-columns:104px 1fr;
+  gap:18px;
+  padding:18px 18px 18px 0;
+  background:
+    linear-gradient(115deg,#08080A 0%,#111114 52%,#070708 100%);
+}
+.side{
+  margin:0 0 0 18px;
+  padding:22px 12px;
+  border-radius:26px;
+  align-items:center;
+  gap:22px;
+  background:linear-gradient(180deg,rgba(27,27,30,.96),rgba(12,12,14,.98));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 24px 70px rgba(0,0,0,.34);
+}
+.brand{
+  width:52px;
+  height:52px;
+  justify-content:center;
+  font-size:0;
+}
+.brand-mark{
+  width:48px;
+  height:48px;
+  color:#0B0B0D;
+  background:
+    radial-gradient(circle at 35% 32%,#fff 0 13%,transparent 14%),
+    conic-gradient(from 40deg,var(--lime),#E8FCA8,var(--gray-300),var(--lime));
+  box-shadow:0 0 28px rgba(215,255,63,.16);
+}
+.nav{
+  width:100%;
+  gap:10px;
+}
+.nav button,
+.side-bottom button{
+  width:56px;
+  height:56px;
+  margin:0 auto;
+  padding:0;
+  justify-content:center;
+  border-radius:18px;
+  color:var(--gray-400);
+  background:rgba(255,255,255,.025);
+}
+.nav button span:first-child{
+  font-size:18px;
+}
+.nav button span:last-child,
+.side-bottom button{
+  font-size:0;
+}
+.nav button.active{
+  color:#101106;
+  background:linear-gradient(145deg,var(--lime),#E9FF83);
+  box-shadow:0 12px 32px rgba(215,255,63,.22);
+}
+.side-bottom{
+  align-items:center;
+}
+#syncState::before{content:'RT';font-size:12px}
+#logoutBtn::before{content:'OUT';font-size:11px}
+.main{
+  padding:8px 10px 36px 0;
+}
+.main::before{
+  content:'Active Tasks ...        Search / View all / Admin';
+  display:flex;
+  align-items:center;
+  height:42px;
+  width:min(520px,100%);
+  margin:4px 0 22px;
+  padding:0 18px;
+  border-radius:12px;
+  background:linear-gradient(180deg,#1a1b1e,#111214);
+  color:var(--gray-400);
+  font-size:12px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045);
+}
+.top{
+  align-items:flex-start;
+  margin-bottom:18px;
+}
+.title h1{
+  font-size:28px;
+  font-weight:600;
+  letter-spacing:-.045em;
+}
+.title p{
+  color:var(--gray-400);
+}
+.round,
+.profile,
+.chip,
+.field,
+.btn.dark{
+  background:linear-gradient(180deg,#1a1b1e,#111214);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+}
+.profile{
+  border-radius:16px;
+}
+.avatar{
+  background:linear-gradient(145deg,var(--lime),#fff);
+  color:#111113;
+}
+.btn{
+  height:42px;
+  border-radius:13px;
+  background:linear-gradient(145deg,var(--lime),#E9FF83);
+  color:#111113;
+  box-shadow:0 10px 28px rgba(215,255,63,.17);
+}
+.btn.danger{
+  background:linear-gradient(145deg,var(--red),#FF8A8A);
+  color:var(--black);
+}
+.btn.success{
+  background:linear-gradient(145deg,var(--green),#D9FFB8);
+  color:var(--black);
+}
+.toolbar{
+  margin-bottom:14px;
+}
+.card,
+.goal-card,
+.budget-card,
+.panel,
+.auth-card{
+  background:
+    linear-gradient(180deg,rgba(31,32,35,.94),rgba(18,19,21,.96));
+  border-radius:18px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.045),
+    0 24px 70px rgba(0,0,0,.34);
+}
+.metric{
+  min-height:132px;
+  padding:18px;
+}
+.metric h3,.card h3{
+  font-weight:500;
+  color:var(--gray-200);
+}
+.metric .value{
+  margin-top:16px;
+  font-size:28px;
+  font-weight:600;
+}
+.arrow{
+  width:32px;
+  height:32px;
+  right:14px;
+  top:14px;
+  border-radius:12px;
+  background:#232428;
+  color:var(--lime);
+  font-size:10px;
+}
+.trend{
+  border-radius:9px;
+  padding:5px 8px;
+}
+.trend.pos{
+  background:rgba(215,255,63,.13);
+  color:var(--lime);
+}
+.trend.neg{
+  background:var(--red-200);
+  color:var(--red);
+}
+.bar-chart{
+  height:218px;
+  padding-top:28px;
+  background:
+    repeating-linear-gradient(to top,rgba(255,255,255,.035) 0 1px,transparent 1px 42px);
+  border-radius:14px;
+}
+.bar{
+  width:14px;
+  border-radius:10px;
+}
+.bar.income{
+  background:linear-gradient(180deg,var(--lime),rgba(215,255,63,.20));
+  box-shadow:0 0 16px rgba(215,255,63,.18);
+}
+.bar.expense{
+  background:linear-gradient(180deg,var(--gray-200),rgba(130,130,140,.22));
+}
+.bar:hover,
+.donut:hover,
+.chart:hover,
+.metric:hover,
+.goal-card:hover,
+.budget-card:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.08);
+}
+.donut{
+  background:conic-gradient(var(--lime) 0 80deg,var(--gray-500) 80deg 160deg,var(--gray-300) 160deg 235deg,var(--gray-700) 235deg 360deg);
+  box-shadow:inset 0 0 30px rgba(0,0,0,.45),0 0 28px rgba(215,255,63,.08);
+}
+.donut-inner{
+  background:#111214;
+}
+.progress{
+  height:12px;
+  background:#2A2B2F;
+}
+.progress i{
+  background:linear-gradient(90deg,var(--lime),#F1FFB0);
+  box-shadow:0 0 12px rgba(215,255,63,.2);
+}
+td{
+  background:#18191C;
+}
+td:first-child{border-radius:14px 0 0 14px}
+td:last-child{border-radius:0 14px 14px 0}
+.amount.pos{color:var(--lime)}
+.amount.neg{color:var(--red)}
+.pill.ok{
+  background:rgba(215,255,63,.14);
+  color:var(--lime);
+}
+.pill.warn{
+  background:rgba(249,151,12,.14);
+  color:var(--orange);
+}
+.pill.bad{
+  background:rgba(255,78,78,.14);
+  color:var(--red);
+}
+.form-grid input,.form-grid select,.form-grid textarea{
+  background:#18191C;
+  border-radius:14px;
+}
+.auth-copy{
+  background:
+    radial-gradient(circle at 20% 20%,rgba(215,255,63,.16),transparent 26%),
+    linear-gradient(145deg,#191A1D,#09090A);
+}
+.tooltip{
+  background:var(--lime);
+  color:#101106;
+}
+@media(max-width:760px){
+  .app{
+    display:block;
+    padding:10px;
+  }
+  .side{
+    margin:0 0 12px;
+    border-radius:22px;
+    flex-direction:row;
+    justify-content:space-between;
+  }
+  .brand{display:none}
+  .nav{
+    display:grid;
+    grid-template-columns:repeat(5,56px);
+    gap:8px;
+    overflow:auto;
+  }
+  .main{padding:0}
+  .main::before{display:none}
+  .top{margin:6px 0 16px}
+  .grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 </style>
 </head>
 <body>
@@ -123,16 +436,16 @@ td:first-child{border-radius:18px 0 0 18px}td:last-child{border-radius:0 18px 18
   <aside class="side">
     <div class="brand"><div class="brand-mark">F</div><span>FinSet</span></div>
     <nav class="nav" id="nav">
-      <button data-page="dashboard" class="active"><span>â–¦</span><span>Dashboard</span></button>
-      <button data-page="transactions"><span>â–¤</span><span>Transactions</span></button>
-      <button data-page="goals"><span>â—Ž</span><span>Goals</span></button>
-      <button data-page="analytics"><span>â–§</span><span>Analytics</span></button>
-      <button data-page="budget"><span>â—Œ</span><span>Budget</span></button>
+      <button data-page="dashboard" class="active"><span>D</span><span>Dashboard</span></button>
+      <button data-page="transactions"><span>T</span><span>Transactions</span></button>
+      <button data-page="goals"><span>G</span><span>Goals</span></button>
+      <button data-page="analytics"><span>A</span><span>Analytics</span></button>
+      <button data-page="budget"><span>B</span><span>Budget</span></button>
     </nav>
     <div class="side-bottom"><button class="dark" id="syncState">Realtime</button><button id="logoutBtn">Log out</button></div>
   </aside>
   <main class="main">
-    <div class="top"><div class="title"><h1 id="pageTitle">Welcome back</h1><p id="pageSub">It is the best time to manage your finances</p></div><div class="top-actions"><button class="round">âŒ•</button><button class="round">â—”</button><button class="profile"><span class="avatar" id="avatar">B</span><span id="profileEmail">Local mode</span></button></div></div>
+    <div class="top"><div class="title"><h1 id="pageTitle">Welcome back</h1><p id="pageSub">It is the best time to manage your finances</p></div><div class="top-actions"><button class="round">S</button><button class="round">N</button><button class="profile"><span class="avatar" id="avatar">B</span><span id="profileEmail">Local mode</span></button></div></div>
     <section id="dashboard" class="page active"></section>
     <section id="transactions" class="page"></section>
     <section id="goals" class="page"></section>
@@ -215,3 +528,4 @@ if(supa){supa.auth.getSession().then(({data})=>setSession(data.session));supa.au
 </script>
 </body>
 </html>
+
